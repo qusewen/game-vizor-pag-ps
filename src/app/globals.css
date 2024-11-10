@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+:root {
+
+  --background: #fff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+.selected-flag:hover{
+  background: #E7E7E7 !important;
+}
+
+.open {
+  background: #E7E7E7 !important;
+}
+
+.custom-checkbox {
+  @apply appearance-none w-3 h-3 border-2 border-[#D95637] rounded-sm cursor-pointer;
+}
+
+.custom-checkbox:checked {
+  @apply bg-[#D95637] border-[#D95637];
+}
+
+.custom-checkbox:checked::after {
+  content: '✓';
+
+  @apply text-white h-[10px] font-bold flex items-center justify-center text-sm;
+
+  font-size: 8px;
+}
