@@ -27,7 +27,9 @@ export const OrderPerson = () => {
             {...formik.getFieldProps('phone_number')}
             onChange={(value) => formik.setFieldValue('phone_number', value)}
             containerClass='lg:w-[280px]'
+            onlyCountries={['ru']}
             country='ru'
+            disableDropdown
             buttonClass='!rounded-[5px]   border-l border-t border-b !border-r-0 !bg-[#E7E7E7] outline-0 '
             inputClass='!rounded-[5px] lg:!w-[280px]  border border-[#CCCDCD] !bg-[#E7E7E7]  outline-0'
           />
