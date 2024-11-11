@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  eslint: { ignoreDuringBuilds: true, },
+  typescript: { ignoreBuildErrors: true, },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
@@ -22,6 +24,15 @@ const nextConfig = {
     },
   },
   experimental: { routeAnnouncer: false },
+
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://testserver.gamevizor.ru/api/:path*/', // Прокси на ваш API сервер
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

@@ -3,7 +3,7 @@ import type { ChangeEvent, CSSProperties, HTMLInputTypeAttribute } from 'react'
 
 interface IProps {
   placeholder: string
-  className?: ClassName
+  className?: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   type?: HTMLInputTypeAttribute
   style?: CSSProperties

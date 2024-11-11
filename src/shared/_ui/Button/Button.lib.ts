@@ -8,8 +8,8 @@ export const variantClassName: Partial<IButtonVariant> = {
   },
   outlined: {
     backgroundColor: 'bg-bg-bgButtonOutlined',
-    color: ' text-bgButtonContained',
-    border: '#b74020',
+    color: ' text-black',
+    border: '#000000',
   },
   default: {
     backgroundColor: 'bg-bgButtonDefault',

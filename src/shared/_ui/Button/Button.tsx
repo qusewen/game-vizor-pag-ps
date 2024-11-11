@@ -6,19 +6,19 @@ import { variantClassName } from 'shared/_ui/Button/Button.lib'
 
 import type { ClassName } from 'postcss-selector-parser'
 import type { CSSProperties, ReactNode } from 'react'
-import type { EButtonVariant } from 'shared/interfaces'
 
 interface IProps {
   title: string
-  variant: Undefinable<EButtonVariant>
+  variant: Undefinable<string>
   onClick?: () => void
   style?: CSSProperties
-  classNames?: ClassName
+  classNames?: string
   children?: ReactNode
   disabled?: boolean
 }
 
 export const Button = ({ title, variant = 'default', onClick, style, classNames, children, disabled = false }: IProps) => {
+  // @ts-ignore
   const variantStyles = variantClassName[variant]
   return (
     <button

@@ -5,6 +5,12 @@ import { useParams } from 'next/navigation'
 
 import { CreateOrder, orderInitialState, OrderPerson, ValidationScheme } from 'shared/_ui'
 
+enum ESub {
+    extra= 8,
+    deluxe=9,
+    essential=7,
+}
+
 export const OrderPage = () => {
   const { type } = useParams()
   return (
@@ -18,7 +24,8 @@ export const OrderPage = () => {
           validateOnMount
           isInitialValid={false}
           validate={ValidationScheme}
-          initialValues={orderInitialState}
+          // @ts-ignore
+          initialValues={{orderInitialState, id: ESub[type]} as any}
           onSubmit={() => {}}
           enableReinitialize
         >

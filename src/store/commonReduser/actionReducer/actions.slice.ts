@@ -2,10 +2,12 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export interface IActionSlice {
   isBurgerOpen: boolean
+  orderUrl: Undefinable<string>
 }
 
 const initialState: IActionSlice = {
   isBurgerOpen: false,
+  orderUrl: undefined
 }
 
 const actionSlice = createSlice({
@@ -15,9 +17,12 @@ const actionSlice = createSlice({
     setIsOpenBurger: (state, { payload }: { payload: boolean }) => {
       state.isBurgerOpen = payload
     },
+    setOrderUrl: (state, { payload }: { payload: Undefinable<string> }) => {
+      state.isBurgerOpen = payload
+    },
   },
 })
 
-export const { setIsOpenBurger } = actionSlice.actions
+export const { setIsOpenBurger, setOrderUrl } = actionSlice.actions
 
 export default actionSlice.reducer

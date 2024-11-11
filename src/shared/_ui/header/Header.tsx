@@ -87,7 +87,7 @@ export const Header = () => {
                 height={20}
               />
             </div>
-            <HeaderButtonGroup className='cursor-pointer transition duration-500 ease-in-out hover:text-[#b74020]' />
+            <HeaderButtonGroup />
           </div>
         </div>
         <div

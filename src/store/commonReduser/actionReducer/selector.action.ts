@@ -9,3 +9,4 @@ export const actionsStateSelector = createSelector(
 )
 
 export const isOpenBurgerSelector = createSelector(actionsStateSelector, (state) => state.isBurgerOpen)
+export const orderUrlSelector = createSelector(actionsStateSelector, (state) => state.orderUrl)

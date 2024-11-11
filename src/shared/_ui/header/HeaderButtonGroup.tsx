@@ -20,7 +20,7 @@ export const HeaderButtonGroup = () => {
         }}
       />
       <Button
-        classNames='!border-white !text-white lg:!border-[#b74020] lg:!text-[#b74020]'
+        classNames='!border-white !text-white lg:!border-black lg:!text-black'
         title='Купить игру'
         variant='outlined'
         onClick={() => {

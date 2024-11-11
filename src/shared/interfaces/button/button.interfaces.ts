@@ -1,7 +1,6 @@
-import type { EButtonVariant } from 'shared/interfaces'
 
 export interface IButtonVariant {
-  [key: EButtonVariant]: {
+  [key: string]: {
     backgroundColor: string
     color: string
   }
