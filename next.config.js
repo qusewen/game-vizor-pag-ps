@@ -9,31 +9,8 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
+    turbo: true, // Активируем Turbopack
     routeAnnouncer: false,
-    turbo: {
-      loaders: {
-        // Добавьте здесь ваши загрузчики Turbopack
-      }
-    }
-  },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        fs: false,
-        module: false,
-      };
-    }
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    });
-    return config;
-  },
-  css: {
-    build: {
-      extract: true,
-      cssFile: './src/app/global.css',
-    },
   },
   async rewrites() {
     return [
