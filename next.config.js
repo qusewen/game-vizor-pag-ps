@@ -2,20 +2,32 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  eslint: { ignoreDuringBuilds: true, },
-  typescript: { ignoreBuildErrors: true, },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  experimental: {
+    routeAnnouncer: false,
+    turbo: {
+      loaders: {
+        // Добавьте здесь ваши загрузчики Turbopack
+      }
+    }
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
         fs: false,
         module: false,
-      }
+      };
     }
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
-    return config
+    });
+    return config;
   },
   css: {
     build: {
@@ -23,16 +35,14 @@ const nextConfig = {
       cssFile: './src/app/global.css',
     },
   },
-  experimental: { routeAnnouncer: false },
-
   async rewrites() {
     return [
       {
         source: '/api/:path*',
         destination: 'https://testserver.gamevizor.ru/api/:path*/', // Прокси на ваш API сервер
       },
-    ]
+    ];
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
