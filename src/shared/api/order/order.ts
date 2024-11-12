@@ -3,6 +3,7 @@ import { backBaseApi } from 'shared/api';
 
 const ORDER_URL = '/v1/products/';
 const ORDER_REG = '/v1/auth/registration/fast_register/';
+const GET_TOKEN = '/v1/';
 const ORDER_CREATE = '/v1/create_payload/';
 const CHECK_PROMOCODE = '/v1/get_promo_code/'
 
@@ -44,11 +45,14 @@ const orderApi = backBaseApi.injectEndpoints({
         data
       }),
     })    ,
-    createOrder: builder.mutation<any, any> ({
-      query: (data) => ({
+    createOrder: builder.mutation<any, {data: any, token: any}> ({
+      query: ({data, token}) => ({
         method: 'POST',
         url: ORDER_CREATE,
-        data
+        data: data,
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        }
       }),
     })
   }),

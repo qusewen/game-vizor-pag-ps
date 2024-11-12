@@ -15,7 +15,7 @@ const getCookie = (name: string) => {
 baseUrl.interceptors.request.use(
   (config) => {
     const token = getCookie('access_token') || getCookie('refresh_token') || ''
-    config.headers.Authorization = token ? `Bearer ${token}` : ''
+    //config.headers.Authorization = token ? `Bearer ${token}` : ''
     config.headers.Accept = 'application/json'
     return config
   },

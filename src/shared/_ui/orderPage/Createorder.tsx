@@ -56,23 +56,23 @@ export const CreateOrder = () => {
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
   }
 
-  const onCreateOrder = () => {
+  const onCreateOrder = (token) => {
     const formikValues = formik.values as FormikValues
     const dto = {
       id: formikValues.id,
       promocode: formikValues.code,
       comments_for_order: formikValues.comment,
       platform_id: (formikValues.ps === 'PlayStation 4' ? 1 : 2),
-      type: 'subscription',
+      type: 'SUBSCRIPTION',
     }
 
-    createOrder(dto).then((res) => {
+    createOrder({data: dto, token: token}).then((res) => {
 
       // @ts-ignore
-      if (!res.id) {
+      if (!res.data.order_id) {
         toast.error('Ошибка создания order')
       } else {
-        router.push(`${res.id}`)
+        router.push(`${res.data.order_id}`)
         // @ts-ignore
         dispatch(setOrderUrl(res.url))
       }
@@ -85,13 +85,13 @@ export const CreateOrder = () => {
 
   const checkUser = async () => {
     const refresh = getCookie('refresh_token') || getCookie('access_token')
-    if (refresh && refresh !== 'undefined') onCreateOrder()
+    if (refresh && refresh !== 'undefined') onCreateOrder(null)
     if (!refresh || refresh === 'undefined') {
       const formikValues = formik.values as FormikValues
       const dto = { username: formikValues.name, phone_number: '+' + formikValues.phone_number, email: formikValues.email }
       await create(dto).then((res) => {
-        setCookie('access_token', res?.token, 1)
-        onCreateOrder()
+        console.log(res.data.token)
+        onCreateOrder(res.data.token)
       }).catch(() => {
         toast.error('Ошибка создания')
       })
@@ -129,6 +129,7 @@ export const CreateOrder = () => {
         {isUsePromocode ? <div style={{position: "absolute", left: "60%", top: "15%"}}>Применен</div> : null}
       </div>
       <Button
+        key={`${!formik.isValid}`}
         title='Оформить заказ'
         variant='contained'
         classNames='w-full mb-[10px] !h-[35px] max-h-[35px] min-h-[35px] !text-[12px]'
