@@ -5,16 +5,16 @@ import flag from '../../../../../public/assets/flag.png'
 export const SubscribeBlock = () => {
   return (
     <div id='subscribe'>
-      <div className='container mx-auto max-w-[1100px] py-[25px] lg:py-[48px]'>
+      <div className='container mx-auto max-w-[1100px] py-[25px] pb-[40px] lg:py-[48px]'>
         <div className='mb-[29px] flex items-center justify-center gap-3 lg:flex-row'>
           <img
             className='hidden w-[50px] lg:block'
             src={flag.src}
             alt='flag'
           />
-          <p className='text-center text-[23px] lg:text-left lg:text-[51px]'>Подписка на русском</p>
+          <p className='text-center text-[27px] lg:text-left lg:text-[51px]'>Подписка на русском</p>
           <img
-            className=' block w-[50px] lg:hidden'
+            className=' block w-[25px] h-[25px] lg:hidden'
             src={flag.src}
             alt='flag'
           />

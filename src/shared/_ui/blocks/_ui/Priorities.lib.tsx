@@ -1,13 +1,14 @@
 import block1 from '../../../../../public/assets/block1.svg'
 import block2 from '../../../../../public/assets/block2.svg'
 import block4 from '../../../../../public/assets/block3.svg'
+import block5 from '../../../../../public/assets/block5.svg'
 import block3 from '../../../../../public/assets/block4.svg'
 import block6 from '../../../../../public/assets/block6.svg'
 
 export const PrioritiesData = [
   {
     icon: block1.src,
-    text: 'Никакаого VPN',
+    text: 'Никакого VPN',
     id: 1,
   },
   {
@@ -24,6 +25,11 @@ export const PrioritiesData = [
     icon: block3.src,
     text: 'Принимаем платежи официально',
     id: 4,
+  },
+  {
+    icon: block5.src,
+    text: 'Техподдержка на сайте',
+    id: 5,
   },
   {
     icon: block6.src,

@@ -17,8 +17,8 @@ interface IProps {
 export const Slider = ({ sliderRef }: IProps) => {
   const breakpoints: SwiperOptions['breakpoints'] = {
     1000: { slidesPerView: 7, spaceBetween: 0, slidesOffsetBefore: 320, slidesOffsetAfter: 0 },
-    640: { slidesPerView: 2, spaceBetween: 10, slidesOffsetBefore: 10, slidesOffsetAfter: 40 },
-    320: { slidesPerView: 2, spaceBetween: 10, slidesOffsetBefore: 10, slidesOffsetAfter: 40 },
+    640: { slidesPerView: 2, spaceBetween: 5, slidesOffsetBefore: 5, slidesOffsetAfter: 5  },
+    320: { slidesPerView:2.5, spaceBetween: 40, slidesOffsetBefore: 5, slidesOffsetAfter: 5 },
   }
 
   return (
