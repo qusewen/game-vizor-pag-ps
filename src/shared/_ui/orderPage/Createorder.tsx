@@ -46,10 +46,16 @@ export const CreateOrder = () => {
                 }
 
             createOrder(dto).then((res)=> {
+
                 // @ts-ignore
-                dispatch(setOrderUrl(res.url))
-                // @ts-ignore
-                router.push(`${res.id}`)
+                if(!res.id) {
+                    toast.error('Ошибка создания order')
+                }else{
+                    router.push(`${res.id}`)
+                    // @ts-ignore
+                    dispatch(setOrderUrl(res.url))
+                }
+
             }).catch(()=>{
                 toast.error('Ошибка создания заказа')
             })
@@ -58,22 +64,21 @@ export const CreateOrder = () => {
 
     const checkUser = async () => {
         const refresh = getCookie('refresh_token') || getCookie('access_token')
-        if(refresh) onCreateOrder()
-        if(!refresh) {
+        if(refresh && refresh !== 'undefined') onCreateOrder()
+        if(!refresh || refresh === 'undefined') {
             const formikValues = formik.values as FormikValues
             const dto = {username: formikValues.name, phone_number: '+' + formikValues.phone_number,email: formikValues.email}
            await create(dto).then((res)=> {
-               setCookie('access_token', res?.data?.token, 1)
+               setCookie('access_token', res?.token, 1)
                onCreateOrder()
-           }).catch((error)=> {
-               toast.error('Пользователь существует')
+           }).catch(()=> {
+               toast.error('Ошибка создания')
            })
         }
     }
 
   const handleSave = async () => {
       checkUser()
-
   }
 
   return (

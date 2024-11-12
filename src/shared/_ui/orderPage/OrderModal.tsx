@@ -11,8 +11,8 @@ interface IProps{
 }
 export const OrderModal = ({ url, id }:IProps) => {
     const {data, refetch} = useGetStatusOrderQuery({id: +id! }, {skip: !id})
-    const status = data?.data.status
-    const chatId = data?.data.chat
+    const status = data?.status
+    const chatId = data?.chat
     useEffect(()=> {
        const intervalId = setInterval(async () => {
             refetch()
