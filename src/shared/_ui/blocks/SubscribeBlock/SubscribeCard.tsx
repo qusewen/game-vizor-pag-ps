@@ -28,7 +28,7 @@ export const SubscribeCard = () => {
               <div className='  lg:pl-[38px] '>
                 <p
                   style={{ color: buttonBg }}
-                  className=' text-[24px] font-bold uppercase lg:text-[42px] lg:normal-case'
+                  className='ml-[-2px] lg:ml-0 text-[24px] font-bold uppercase lg:text-[42px] lg:normal-case'
                 >
                   {type}
                 </p>

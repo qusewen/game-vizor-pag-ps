@@ -20,10 +20,10 @@ export const SubBlock = () => {
         <div className={clsx('transition-opacity duration-1000 ease-in-out', { 'opacity-0': !isVisible }, { 'opacity-100': isVisible })}>
           <p className='text-center text-[27px] font-medium lg:text-left lg:text-[46px]'>Оформить подписку</p>
           <p className='pt-[-14px] text-center text-[27px] font-medium leading-10 lg:text-left lg:text-[46px]'>Playstation Plus</p>
-          <div className='mb-[44px] flex flex-col gap-[30px] text-center text-[27px] lg:mt-[16px] lg:flex-row lg:text-left lg:text-[38px]'>
+          <div className='mb-[44px] items-center gap-[10px] flex flex-row lg:gap-[30px] text-center text-[27px] lg:mt-[16px] lg:flex-row lg:text-left lg:text-[38px]'>
             на русском языке
             <img
-              className='hidden h-[50px] w-[50px] lg:block'
+              className=' w-[20px] h-[20px] lg:h-[50px] lg:w-[50px] block'
               alt='flag'
               src={flag.src}
             />

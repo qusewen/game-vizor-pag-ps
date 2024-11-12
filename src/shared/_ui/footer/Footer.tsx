@@ -27,9 +27,9 @@ export const Footer = () => {
           >
             support@gamevizor.ru
           </a>
-          <p className='opacity-60'>Политика конфиденциальности</p>
-          <p className='opacity-60'>Публичная оферта</p>
-          <p className='opacity-60'>Согласие на рекламную рассылку</p>
+          <p className='opacity-60' onClick={()=> window.open('https://gamevizor.ru/confidential/')}>Политика конфиденциальности</p>
+          <p className='opacity-60' onClick={()=> window.open('https://gamevizor.ru/offer/')}>Публичная оферта</p>
+          <p className='opacity-60' onClick={()=> window.open('https://gamevizor.ru')}>Согласие на рекламную рассылку</p>
         </div>
         <div className='text-center lg:text-left'>
           <a

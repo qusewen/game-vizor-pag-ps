@@ -2,7 +2,7 @@ import type { IButtonVariant } from 'shared/interfaces'
 
 export const variantClassName: Partial<IButtonVariant> = {
   contained: {
-    backgroundColor: 'bg-bgButtonContained',
+    backgroundColor: '#b74020',
     color: ' text-textButtonColor',
     border: '#b74020',
   },

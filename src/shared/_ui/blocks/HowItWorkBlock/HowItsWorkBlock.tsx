@@ -23,7 +23,7 @@ export const HowItsWorkBlock = () => {
             variant='contained'
           />
         </div>
-        <div className='flex flex-col justify-between gap-3 lg:flex-row lg:gap-0'>
+        <div className='flex flex-col items-center lg:justify-between gap-3 lg:flex-row lg:gap-0'>
           {HowIstWorkBlockLib.map(({ id, text, subText, index }) => {
             return (
               <InfoBlock
@@ -37,7 +37,7 @@ export const HowItsWorkBlock = () => {
         </div>
         <Button
           onClick={() => ScrollFunctionLib(2)}
-          classNames='!text-[12px] lg:hidden p-[19px] flex items-center lg:w-fit w-full justify-center mt-[25px]'
+          classNames='!text-[12px] mx-auto lg:hidden p-[19px] flex items-center lg:w-fit w-[90%] justify-center mt-[25px]'
           title='Оформить подписку'
           variant='contained'
         />
