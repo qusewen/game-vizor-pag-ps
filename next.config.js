@@ -16,7 +16,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://testserver.gamevizor.ru/api/:path*/', // Прокси на ваш API сервер
+        destination: 'https://server.gamevizor.ru/api/:path*/', // Прокси на ваш API сервер
       },
     ];
   },

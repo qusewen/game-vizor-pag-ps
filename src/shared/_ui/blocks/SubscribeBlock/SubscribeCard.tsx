@@ -5,12 +5,57 @@ import { useRouter } from 'next/navigation'
 import { ArrowButton, Button, CardDataLib } from 'shared/_ui'
 
 import cross from '../../../../../public/assets/cross.png'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useGetOrdersQuery } from 'shared/api/order/order'
 
 export const SubscribeCard = () => {
   const router = useRouter()
+
+  const [subscriptions, setSubscriptions] = useState([])
+  const {data} = useGetOrdersQuery()
+  const [cardsData, setCardsData] = useState([])
+
+  useEffect(() => {
+    if (!data) return
+
+    const request = async () => {
+      const updatedCardData = data.results.map((item, index) => {
+        let type = '';
+        switch (item.title) {
+          case 'ОСНОВНОЙ':
+            type = 'Essential';
+            break;
+          case 'ЭКСТРА':
+            type = 'Extra';
+            break;
+          case 'ЛЮКС':
+            type = 'Deluxe';
+            break;
+          default:
+            type = item.title;
+        }
+
+        return {
+          ...CardDataLib[index], // Mantén las propiedades de CardDataLib
+          id: item.id, // Actualiza el id
+          cost: `${item.cost}₽`, // Actualiza el costo
+          type: type, // Actualiza el type
+          period: '12 Мес*', // Si es necesario, actualiza el período
+          systemName: type.toLowerCase(), // Actualiza el systemName
+        };
+      });
+
+      setCardsData(updatedCardData);
+      console.log(updatedCardData)
+    }
+
+    request()
+  }, [data])
+
   return (
     <div className='flex flex-col items-center justify-center gap-[15px] lg:flex-row lg:gap-[40px]'>
-      {CardDataLib.map(({ id, period, cost, background, type, buttonBg, text, monthColor, systemName }) => {
+      {cardsData.map(({ id, period, cost, background, type, buttonBg, text, monthColor, systemName }) => {
         return (
           <div
             key={id}

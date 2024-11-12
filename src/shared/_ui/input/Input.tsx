@@ -9,8 +9,9 @@ interface IProps {
   style?: CSSProperties
   value?: Undefinable<string | readonly string[] | number>
   checked?: boolean
+  disabled?: boolean
 }
-export const Input = ({ onChange, placeholder, className, type = 'text', style, value = '', checked = false }: IProps) => {
+export const Input = ({ onChange, placeholder, className, type = 'text', style, value = '', checked = false, disabled = false }: IProps) => {
   return (
     <input
       value={value}
@@ -20,6 +21,7 @@ export const Input = ({ onChange, placeholder, className, type = 'text', style, 
       onChange={onChange}
       type={type}
       placeholder={placeholder}
+      disabled={disabled}
       className={`${className} ${type !== 'checkbox' ? 'h-[35px] w-full rounded-[5px] border border-[#CCCDCD] bg-[#E7E7E7] pl-2 text-[14px] outline-0' : ''}`}
     />
   )
