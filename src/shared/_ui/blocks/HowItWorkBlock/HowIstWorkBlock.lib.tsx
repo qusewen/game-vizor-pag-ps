@@ -4,7 +4,10 @@ export const HowIstWorkBlockLib = [
   {
     id: 1,
     index: 1,
-    text: 'Выбери подписку | игру и оплати ее на сайте',
+      text: <div className='flex flex-col'>
+          <span>Выбери подписку | игру</span>
+          <span>и оплати ее на сайте</span>
+      </div>,
     subText: (
       <div>
         Преимущества и различия тарифов описаны в
@@ -23,13 +26,13 @@ export const HowIstWorkBlockLib = [
     index: 2,
     text: (
       <div className='flex flex-col '>
-        <span>После оплаты перейдите в</span>
+        <span>После оплаты перейдите </span>
         <span>
           <span
             className='cursor-pointer pr-[4px] text-[#b74020] underline'
             onClick={() => window.open('https://gamevizor.ru/')}
           >
-            чат на нашем
+            в чат на нашем
           </span>
           сайте
         </span>
@@ -42,7 +45,7 @@ export const HowIstWorkBlockLib = [
         <span>
           с момента твоего обращения в
           <span
-            className='cursor-pointer pl-2 text-[#b74020] underline'
+            className='cursor-pointer pl-1 text-[#b74020] underline'
             onClick={() => window.open('https://gamevizor.ru/')}
           >
             чат
@@ -62,8 +65,8 @@ export const HowIstWorkBlockLib = [
     ),
     subText: (
       <div className='flex flex-col'>
-        <span>В случае проблем обратитесь к</span>
-        <span>оператору на сайте и вам</span>
+        <span>В случае проблем обратитесь</span>
+        <span>к оператору на сайте и вам</span>
         <span> незамедлительно помогут</span>
       </div>
     ),
