@@ -3,7 +3,9 @@ import { backBaseApi } from 'shared/api';
 
 const ORDER_URL = '/v1/products/';
 const ORDER_REG = '/v1/auth/registration/fast_register/';
+const ORDER_CHECK_URL = '/v1/payment/check'
 const GET_TOKEN = '/v1/token/refresh/';
+const GET_USER = '/v1/auth/user/';
 const ORDER_CREATE = '/v1/create_payload/';
 const CHECK_PROMOCODE = '/v1/get_promo_code/'
 
@@ -32,10 +34,23 @@ const orderApi = backBaseApi.injectEndpoints({
       }),
     }),
 
-    getStatusOrder: builder.query<{ data: any }, { id: number }>({
-      query: ({id}) => ({
+    getStatusOrder: builder.query<{ data: any }, { id: number, token: string }>({
+      query: ({id, token}) => ({
         method: 'GET',
-        url: `${ORDER_URL}/${id}`,
+        url: `${ORDER_CHECK_URL}/${id}`,
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        }
+      }),
+    }),
+
+    getUser: builder.query<{ data: any }, {token: string}>({
+      query: ({token}) => ({
+        method: 'GET',
+        url: `${GET_USER}`,
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        }
       }),
     }),
 
@@ -68,4 +83,4 @@ const orderApi = backBaseApi.injectEndpoints({
   }),
 });
 
-export const { useGetOrdersQuery,useGetStatusOrderQuery, useCreateUserMutation,useCreateOrderMutation, useGetPromocodeQuery, useGetAccessTokenMutation } = orderApi;
+export const { useGetOrdersQuery,useGetStatusOrderQuery, useCreateUserMutation,useCreateOrderMutation, useGetPromocodeQuery, useGetAccessTokenMutation, useGetUserQuery } = orderApi;

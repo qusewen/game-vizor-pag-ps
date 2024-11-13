@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 
 import { Button, Input } from 'shared/_ui'
 import { SubscribeCost } from 'shared/contants'
-import { useCreateOrderMutation, useCreateUserMutation, useGetAccessTokenMutation, useGetOrdersQuery, useGetPromocodeQuery } from "shared/api/order/order";
+import { useCreateOrderMutation, useCreateUserMutation, useGetAccessTokenMutation, useGetOrdersQuery, useGetPromocodeQuery, useGetUserQuery } from "shared/api/order/order";
 import { useAppDispatch } from "store/store";
 import { setOrderUrl } from "store/commonReduser/actionReducer";
 import { toast } from "react-toastify";
@@ -16,12 +16,31 @@ export const CreateOrder = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
   // @ts-ignore
-  const count = SubscribeCost[type]
-  const discount = 0
+
+  //const [count, setCount] = useState(SubscribeCost[type])
+  const [discount, setDiscount] = useState(0)
   const formik = useFormikContext()
 
 
   const { data } = useGetOrdersQuery() // поулчение всех подписок с бека
+
+  const [Subscription, setSubscription] = useState(null)
+  const fff = {
+    "essential": "ОСНОВНОЙ",
+    "extra": "ЭКСТРА",
+    'deluxe': "ЛЮКС"
+  }
+  const [count, setCount] = useState(0)
+  const [price, setPrice] = useState(0)
+
+  useEffect(() => {
+    if (!data) return
+    setSubscription(data.results.find(item => item.title == fff[type]))
+    setCount(data.results.find(item => item.title == fff[type]).cost)
+    setPrice(data.results.find(item => item.title == fff[type]).cost)
+  }, [data])
+  
+
   const [create] = useCreateUserMutation()
   const [createOrder] = useCreateOrderMutation()
   const getCookie = (name: string) => {
@@ -30,10 +49,29 @@ export const CreateOrder = () => {
     if (parts.length === 2) return parts.pop()?.split(';').shift()
 
   }
+
   const [objPromocode, setObjPromocode] = useState();
-  const { refetch } = useGetPromocodeQuery({ title: formik.values.code, type: "SUBSCRIPTION", id: 1 })
-  const { access_refresh } = useGetAccessTokenMutation()
+
+  useEffect(() => {
+    if (!objPromocode) return
+
+    if (objPromocode.type == "FIXED") {
+      setDiscount(objPromocode.value)
+      setPrice(count - objPromocode.value)
+    } else {
+      const dis = Math.round(count * objPromocode.value / 100)
+      setDiscount(dis)
+      setPrice(count - dis)
+    }
+  }, [data, objPromocode])
+
+
+  const { refetch } = useGetPromocodeQuery({ title: formik.values.code, type: "SUBSCRIPTION", id: Subscription?.id})
+  const [get_access_token] = useGetAccessTokenMutation()
   const [isUsePromocode, setIsUsePromocode] = useState(false);
+  const [AccessToken, setAccessToken] = useState("")
+  const { refetch: refetchUser } = useGetUserQuery({ token: AccessToken })
+  const [User, setUser] = useState(null)
   useEffect(() => {
     const request = async () => {
       if (formik.values.code === "") return;
@@ -41,7 +79,7 @@ export const CreateOrder = () => {
       const data = await refetch()
       console.log(data)
       if (data?.data) {
-        setObjPromocode(2)
+        setObjPromocode(data?.data)
         console.log(true)
         setIsUsePromocode(true)
       }
@@ -50,6 +88,26 @@ export const CreateOrder = () => {
     request()
   }, [formik.values.code])
 
+  useEffect(() => {
+    const request = async () => {
+      const response = await refetchUser()
+      if (response?.data) {
+        setUser(response?.data)
+      }
+    }
+
+    request()
+  }, [AccessToken])
+
+  useEffect(() => {
+    console.log(User)
+    if (!User) return
+    formik.setFieldValue('name', User?.username)
+    formik.setFieldValue('email', User?.email)
+    formik.setFieldValue('phone_number', User?.phone_number)
+    formik.setFieldValue('disabled', true)
+  }, [User])
+
 
   const setCookie = (name: string, value: string, days: number) => {
     const date = new Date(); date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -57,17 +115,18 @@ export const CreateOrder = () => {
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
   }
 
-  const onCreateOrder = (token) => {
+  const onCreateOrder = (token: string) => {
+    console.log("DFDFJDKDKFD", token)
     const formikValues = formik.values as FormikValues
     const dto = {
-      id: formikValues.id,
+      id: Subscription?.id,
       promocode: formikValues.code,
       comments_for_order: formikValues.comment,
       platform_id: (formikValues.ps === 'PlayStation 4' ? 1 : 2),
       type: 'SUBSCRIPTION',
     }
 
-    createOrder({data: dto, token: token}).then((res) => {
+    createOrder({ data: dto, token: token }).then((res) => {
 
       // @ts-ignore
       if (!res.data.order_id) {
@@ -85,13 +144,12 @@ export const CreateOrder = () => {
   }
 
   const checkUser = async () => {
-    const refresh = getCookie('refresh_token') || getCookie('access_token')
-    if (refresh && refresh !== 'undefined') onCreateOrder(null)
-    if (!refresh || refresh === 'undefined') {
+    const token = await get_access_token()
+    if (token?.data?.access) onCreateOrder(token?.data?.access)
+    if (!token?.data?.access) {
       const formikValues = formik.values as FormikValues
       const dto = { username: formikValues.name, phone_number: '+' + formikValues.phone_number, email: formikValues.email }
       await create(dto).then((res) => {
-        console.log(res.data.token)
         onCreateOrder(res.data.token)
       }).catch(() => {
         toast.error('Ошибка создания')
@@ -103,21 +161,20 @@ export const CreateOrder = () => {
     checkUser()
   }
 
-  console.log(formik.isValid)
   useEffect(() => {
     const request = async () => {
-      console.log("TETRETETE")
-      await access_refresh()
+      const token = await get_access_token()
+      setAccessToken(token.data.access)
     }
 
     request()
-  })
+  }, [])
 
   return (
     <div className='mx-auto h-fit  w-[88%] rounded-[20px] bg-[#F0EEEE] px-[15px] py-[20px] lg:w-[30%] '>
       <div className='mb-[20px] flex items-center justify-between'>
         <div className='font-semibold'>Итого:</div>
-        <div className='font-semibold'>{count}₽</div>
+        <div className='font-semibold'>{price}₽</div>
       </div>
       <div className='mb-[5px] flex  items-center justify-between text-[12px] font-semibold'>
         <div>Товаров на сумму:</div>
@@ -127,7 +184,7 @@ export const CreateOrder = () => {
         <div>Ваша скидка:</div>
         <div>{discount}₽</div>
       </div>
-      <div style={{position: "relative"}}>
+      <div style={{ position: "relative" }}>
         <Input
           value={formik.getFieldProps('code').value}
           onChange={(e) => formik.setFieldValue('code', e.target.value)}
@@ -135,7 +192,7 @@ export const CreateOrder = () => {
           className='mb-[10px]'
           disabled={isUsePromocode}
         />
-        {isUsePromocode ? <div style={{position: "absolute", left: "60%", top: "15%"}}>Применен</div> : null}
+        {isUsePromocode ? <div style={{ position: "absolute", left: "60%", top: "15%" }}>Применен</div> : null}
       </div>
       <Button
         key={`${!formik.isValid}`}

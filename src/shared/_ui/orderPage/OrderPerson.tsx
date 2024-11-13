@@ -23,6 +23,7 @@ export const OrderPerson = () => {
             onChange={(e) => formik.setFieldValue('name', e.target.value)}
             placeholder='Имя'
             className='w-[60%]'
+            disabled={formik.getFieldProps("disabled").value}
           />
           <PhoneInput
             {...formik.getFieldProps('phone_number')}
@@ -33,6 +34,7 @@ export const OrderPerson = () => {
             disableDropdown
             buttonClass='!rounded-[5px]   border-l border-t border-b !border-r-0 !bg-[#E7E7E7] outline-0 '
             inputClass='!rounded-[5px] !w-[100%] lg:!w-[280px]  border border-[#CCCDCD] !bg-[#E7E7E7]  outline-0'
+            disabled={formik.getFieldProps("disabled").value}
           />
         </div>
         <div className='flex flex-col justify-between gap-[10px] lg:flex-row'>
@@ -40,6 +42,7 @@ export const OrderPerson = () => {
             value={formik.getFieldProps('email').value}
             onChange={(e) => formik.setFieldValue('email', e.target.value)}
             placeholder='email'
+            disabled={formik.getFieldProps("disabled").value}
           />
           <PsPicker />
         </div>
@@ -49,6 +52,7 @@ export const OrderPerson = () => {
             onChange={(e) => formik.setFieldValue('comment', e.target.value)}
             placeholder='Комментарии к заказу'
             className='h-[130px] w-full resize-none rounded-[5px] border border-[#CCCDCD] bg-[#E7E7E7] pl-2 text-[14px] outline-0'
+            disabled={formik.getFieldProps("disabled").value}
           />
         </div>
         <Offerts />

@@ -36,12 +36,13 @@ export const Slider = ({ sliderRef }: IProps) => {
       slidesOffsetBefore={320}
       breakpoints={breakpoints}
     >
-      {GameLib.map(({ poster, id, name }) => {
+      {GameLib.map(({ poster, id, name, url }) => {
         return (
           <SwiperSlide key={id}>
             <GameElement
               name={name}
               src={poster}
+              url={url}
             />
           </SwiperSlide>
         )

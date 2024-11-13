@@ -47,7 +47,6 @@ export const SubscribeCard = () => {
       });
 
       setCardsData(updatedCardData);
-      console.log(updatedCardData)
     }
 
     request()
@@ -72,7 +71,7 @@ export const SubscribeCard = () => {
               </div>
               <div className='  lg:pl-[38px] '>
                 <p
-                  style={{ color: buttonBg }}
+                  style={{ color: buttonBg, textTransform: "uppercase !important" }}
                   className='ml-[-2px] lg:ml-0 text-[24px] font-bold uppercase lg:text-[42px] lg:normal-case'
                 >
                   {type}
@@ -95,7 +94,7 @@ export const SubscribeCard = () => {
               onClick={() => router.push(`/order/${systemName}`)}
               classNames='!border-0 !text-[12px] mx-auto p-[19px]  items-center hover:scale-105 lg:flex hidden  w-[80%] justify-center'
               style={{ background: buttonBg, color: text, borderWidth: '0px' }}
-              title='Оформить'
+              title='ОФОРМИТЬ'
               variant='default'
             />
             <div

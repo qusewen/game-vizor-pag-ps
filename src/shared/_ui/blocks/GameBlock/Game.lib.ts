@@ -18,31 +18,37 @@ export const GameLib = [
     poster: game1.src,
     id: 1,
     name: "Marvel's Spider-Man 2",
+    url: "https://gamevizor.ru/product/25"
   },
   {
     poster: game2.src,
     id: 2,
     name: 'Hogwarts Legacy',
+    url: "https://gamevizor.ru/product/48"
   },
   {
     poster: game3.src,
     id: 3,
     name: 'Resident Evil 4 Remake',
+    url: "https://gamevizor.ru/product/60"
   },
   {
     poster: game4.src,
     id: 4,
     name: 'Atomic Heart',
+    url: "https://gamevizor.ru/product/30"
   },
   {
     poster: game5.src,
     id: 5,
     name: 'Diablo IV ',
+    url: "https://gamevizor.ru/product/42"
   },
   {
     poster: game6.src,
     id: 6,
     name: "Baldur's Gate 3",
+    url: "https://gamevizor.ru/product/21"
   },
   {
     poster: game7.src,
@@ -53,11 +59,13 @@ export const GameLib = [
     poster: game8.src,
     id: 8,
     name: 'Cyberpunk 2077',
+    url: "https://gamevizor.ru/product/101"
   },
   {
     poster: game9.src,
     id: 9,
     name: 'FINAL FANTASY XVI',
+    url: "https://gamevizor.ru/product/31"
   },
   {
     poster: undefined,

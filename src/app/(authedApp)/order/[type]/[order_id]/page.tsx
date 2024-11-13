@@ -13,11 +13,6 @@ const OrderPageById = () => {
     const router = useRouter()
 
     const orderUrl = useAppSelector(orderUrlSelector)
-
-    useEffect(() => {
-        console.log(orderUrl)
-    })
-
     useEffect(()=> {
         setOn()
     }, [])
@@ -27,14 +22,9 @@ const OrderPageById = () => {
     return <>
         <Subjects />
         <OrderPage />
-        {isOn && <OrderModal url={orderUrl} id={order_id as string} />}
+        {isOn && <OrderModal url={orderUrl} id={order_id as string} type={type} />}
         {isOn && <div
             className='z-40 w-full h-full fixed top-0 left-0 bg-[#474747ba]'
-            onClick={(e) => {
-                router.back();
-                e.stopPropagation()
-                e.preventDefault()
-            }}
         />}
     </>
 }

@@ -1,18 +1,21 @@
 interface IProps {
   name: Undefinable<string>
   src: Undefinable<string>
+  url: Undefinable<string>
 }
 
-export const GameElement = ({ name, src }: IProps) => {
+export const GameElement = ({ name, src, url }: IProps) => {
   return (
     <div>
       <div className='h-[160px] w-[160px] rounded-[20px] transition duration-500 hover:scale-110 lg:h-[200px] lg:w-[200px]'>
         {src ? (
-          <img
-            className='h-[160px] w-[160px] rounded-[20px] lg:h-[200px] lg:w-[200px]'
-            alt={name}
-            src={src}
-          />
+          <a href={url}>
+            <img
+              className='h-[160px] w-[160px] rounded-[20px] lg:h-[200px] lg:w-[200px]'
+              alt={name}
+              src={src}
+            />
+          </a>
         ) : (
           <div className='flex h-[160px] w-[160px] flex-col items-center justify-center rounded-[20px] bg-[#b74020] text-white lg:h-[200px] lg:w-[200px]'>
             <p className=' text-[27px] lg:text-[41px]'>+5000</p>
