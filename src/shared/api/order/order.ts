@@ -3,7 +3,7 @@ import { backBaseApi } from 'shared/api';
 
 const ORDER_URL = '/v1/products/';
 const ORDER_REG = '/v1/auth/registration/fast_register/';
-const GET_TOKEN = '/v1/';
+const GET_TOKEN = '/v1/token/refresh/';
 const ORDER_CREATE = '/v1/create_payload/';
 const CHECK_PROMOCODE = '/v1/get_promo_code/'
 
@@ -38,6 +38,16 @@ const orderApi = backBaseApi.injectEndpoints({
         url: `${ORDER_URL}/${id}`,
       }),
     }),
+
+    
+    getAccessToken: builder.mutation<any, void>({
+      query: (data) => ({
+        method: 'POST',
+        url: GET_TOKEN,
+        data
+      }),
+    }),
+
     createUser: builder.mutation<any, {username: string, phone_number: string, email: string}> ({
       query: (data) => ({
         method: 'POST',
@@ -58,4 +68,4 @@ const orderApi = backBaseApi.injectEndpoints({
   }),
 });
 
-export const { useGetOrdersQuery,useGetStatusOrderQuery, useCreateUserMutation,useCreateOrderMutation, useGetPromocodeQuery } = orderApi;
+export const { useGetOrdersQuery,useGetStatusOrderQuery, useCreateUserMutation,useCreateOrderMutation, useGetPromocodeQuery, useGetAccessTokenMutation } = orderApi;

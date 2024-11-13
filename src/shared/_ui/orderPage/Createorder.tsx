@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 
 import { Button, Input } from 'shared/_ui'
 import { SubscribeCost } from 'shared/contants'
-import { useCreateOrderMutation, useCreateUserMutation, useGetOrdersQuery, useGetPromocodeQuery } from "shared/api/order/order";
+import { useCreateOrderMutation, useCreateUserMutation, useGetAccessTokenMutation, useGetOrdersQuery, useGetPromocodeQuery } from "shared/api/order/order";
 import { useAppDispatch } from "store/store";
 import { setOrderUrl } from "store/commonReduser/actionReducer";
 import { toast } from "react-toastify";
@@ -32,6 +32,7 @@ export const CreateOrder = () => {
   }
   const [objPromocode, setObjPromocode] = useState();
   const { refetch } = useGetPromocodeQuery({ title: formik.values.code, type: "SUBSCRIPTION", id: 1 })
+  const { access_refresh } = useGetAccessTokenMutation()
   const [isUsePromocode, setIsUsePromocode] = useState(false);
   useEffect(() => {
     const request = async () => {
@@ -72,9 +73,9 @@ export const CreateOrder = () => {
       if (!res.data.order_id) {
         toast.error('Ошибка создания order')
       } else {
-        router.push(`${res.data.order_id}`)
+        router.push(`${type}/${res.data.order_id}`)
         // @ts-ignore
-        dispatch(setOrderUrl(res.url))
+        dispatch(setOrderUrl(res.data.url))
       }
 
     }).catch(() => {
@@ -103,6 +104,14 @@ export const CreateOrder = () => {
   }
 
   console.log(formik.isValid)
+  useEffect(() => {
+    const request = async () => {
+      console.log("TETRETETE")
+      await access_refresh()
+    }
+
+    request()
+  })
 
   return (
     <div className='mx-auto h-fit  w-[88%] rounded-[20px] bg-[#F0EEEE] px-[15px] py-[20px] lg:w-[30%] '>

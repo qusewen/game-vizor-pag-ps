@@ -14,9 +14,13 @@ const OrderPageById = () => {
 
     const orderUrl = useAppSelector(orderUrlSelector)
 
+    useEffect(() => {
+        console.log(orderUrl)
+    })
+
     useEffect(()=> {
         setOn()
-    })
+    }, [])
 
     if(!order_id) router.push(`${type}`)
 
