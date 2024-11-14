@@ -22,7 +22,7 @@ const OrderPageById = () => {
     return <>
         <Subjects />
         <OrderPage />
-        {isOn && <OrderModal url={orderUrl} id={order_id as string} type={type} />}
+        {isOn && <OrderModal url={orderUrl} id={order_id as string} type={type} onClose={setOff} />}
         {isOn && <div
             className='z-40 w-full h-full fixed top-0 left-0 bg-[#474747ba]'
         />}

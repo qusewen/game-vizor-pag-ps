@@ -12,16 +12,16 @@ interface IProps {
     id: string,
     type: string;
     cost: number;
+    onClose: ()=> void
 }
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const OrderModal = ({ url, id , type, cost}: IProps) => {
+export const OrderModal = ({ url, id , type, cost, onClose}: IProps) => {
     const [accessToken, setAccessToken] = useState(null)
     const { subscriptionType, orderId } = useParams();
-
     // Состояние для хранения типа подписки
     const [subscription, setSubscription] = useState(null);
 
@@ -81,54 +81,59 @@ export const OrderModal = ({ url, id , type, cost}: IProps) => {
     }, [url])
 
     return (
-        <div className='absolute bg-[#F0EEEE] rounded-[20px] p-[20px] py-[40px] z-[50] top-[30%] left-[35%]'>
-            {status === 'WAITING' && (
-                <img
-                    alt='wait'
-                    src={wait.src}
-                    className='mb-[30px] mx-auto w-[90px] h-[90px]'
+        <div
+            className='absolute bg-[#F0EEEE] lg:w-[380px] w-[330px] rounded-[20px] p-[20px] py-[40px] z-[50] top-[13%] left-[6%] lg:top-[30%] lg:left-[35%]'>
+            <div className='absolute top-4 text-[25px] right-4' onClick={onClose}>x</div>
+
+            <div className='relative'>
+                {status === 'WAITING' && (
+                    <img
+                        alt='wait'
+                        src={wait.src}
+                        className='mb-[30px] mx-auto w-[90px] h-[90px]'
+                    />
+                )}
+                {status === 'ACCEPT' && (
+                    <img
+                        alt='good'
+                        src={good.src}
+                        className='mb-[30px] mx-auto w-[90px] h-[90px]'
+                    />
+                )}
+                {status === 'WAITING' && (
+                    <div className='uppercase text-center mb-[10px] text-[27px]'>
+                        <div>Спасибо, ваш</div>
+                        <div>Заказ ждет оплаты</div>
+                    </div>
+                )}
+                {status === 'WAITING' && (
+                    <div className='text-center mb-[30px] text-[12px]'>
+                        <div>Дождитесь автоматического перехода на</div>
+                        <div>страницу оплаты или нажмите на кнопку</div>
+                    </div>
+                )}
+                {status === 'ACCEPT' && (
+                    <div className='uppercase text-center text-[27px] mb-[10px]'>
+                        <div>Спасибо, ваш</div>
+                        <div>Заказ оформлен</div>
+                    </div>
+                )}
+                {status === 'ACCEPT' && (
+                    <div className='text-center text-[12px] mb-[30px]'>
+                        <div>Перейдите в чат для дальнейшего</div>
+                        <div>оформления подписки</div>
+                    </div>
+                )}
+                <Button
+                    title={status === 'ACCEPT' ? 'Перейти в чат' : 'Оплатить'}
+                    variant='contained'
+                    classNames='w-full mb-[10px] !h-[35px] max-h-[35px] min-h-[35px] !text-[12px]'
+                    onClick={() => {
+                        if (status === 'WAITING') window.open(`${url}`);
+                        if (status === 'ACCEPT') window.open(`https://gamevizor.ru/profile/chats/${chatId}`);
+                    }}
                 />
-            )}
-            {status === 'ACCEPT' && (
-                <img
-                    alt='good'
-                    src={good.src}
-                    className='mb-[30px] mx-auto w-[90px] h-[90px]'
-                />
-            )}
-            {status === 'WAITING' && (
-                <div className='uppercase text-center mb-[10px] text-[27px]'>
-                    <div>Спасибо, ваш</div>
-                    <div>Заказ ждет оплаты</div>
-                </div>
-            )}
-            {status === 'WAITING' && (
-                <div className='text-center mb-[30px] text-[12px]'>
-                    <div>Дождитесь автоматического перехода на</div>
-                    <div>страницу оплаты или нажмите на кнопку</div>
-                </div>
-            )}
-            {status === 'ACCEPT' && (
-                <div className='uppercase text-center text-[27px] mb-[10px]'>
-                    <div>Спасибо, ваш</div>
-                    <div>Заказ оформлен</div>
-                </div>
-            )}
-            {status === 'ACCEPT' && (
-                <div className='text-center text-[12px] mb-[30px]'>
-                    <div>Перейдите в чат для дальнейшего</div>
-                    <div>оформления подписки</div>
-                </div>
-            )}
-            <Button
-                title={status === 'ACCEPT' ? 'Перейти в чат' : 'Оплатить'}
-                variant='contained'
-                classNames='w-full mb-[10px] !h-[35px] max-h-[35px] min-h-[35px] !text-[12px]'
-                onClick={() => {
-                    if (status === 'WAITING') window.open(`${url}`);
-                    if (status === 'ACCEPT') window.open(`https://gamevizor.ru/profile/chats/${chatId}`);
-                }}
-            />
+            </div>
         </div>
 
     )

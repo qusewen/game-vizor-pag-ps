@@ -18,7 +18,7 @@ const actionSlice = createSlice({
       state.isBurgerOpen = payload
     },
     setOrderUrl: (state, { payload }: { payload: Undefinable<string> }) => {
-      state.isBurgerOpen = payload
+      state.orderUrl = payload
     },
   },
 })
